@@ -10,6 +10,7 @@ import CopyButton from "../components/CopyButton";
 interface Props {
   initialConnectors: Connector[];
   initialError: string | null;
+  pypiVersion: string | null;
 }
 
 const TERMINAL_OUTPUT = `$ prism list --registry
@@ -24,7 +25,7 @@ const TERMINAL_OUTPUT = `$ prism list --registry
 
   5 connectors available. Use 'prism install <slug>' to install.`;
 
-export default function HomeClient({ initialConnectors, initialError }: Props) {
+export default function HomeClient({ initialConnectors, initialError, pypiVersion }: Props) {
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("All");
   const [transportFilter, setTransportFilter] = useState("All");
@@ -119,21 +120,27 @@ export default function HomeClient({ initialConnectors, initialError }: Props) {
               }}>
                 {initialConnectors.length} connectors
               </span>
-              <span style={{
-                fontFamily: "'DM Mono', monospace",
-                fontSize: 13,
-                background: "var(--surface)",
-                border: "1px solid var(--border)",
-                borderRadius: 100,
-                padding: "8px 16px",
-                color: "var(--text-secondary)",
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-              }}>
-                pip install prism-signal
+              <a
+                href="https://pypi.org/project/prism-signal/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{
+                  fontFamily: "'DM Mono', monospace",
+                  fontSize: 13,
+                  background: "var(--surface)",
+                  border: "1px solid var(--border)",
+                  borderRadius: 100,
+                  padding: "8px 16px",
+                  color: "var(--text-secondary)",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  textDecoration: "none",
+                }}
+              >
+                {pypiVersion ? `v${pypiVersion} on PyPI` : "pip install prism-signal"}
                 <CopyButton text="pip install prism-signal" />
-              </span>
+              </a>
             </div>
           </div>
 

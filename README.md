@@ -2,7 +2,7 @@
 
 **Connector framework for velocity signal engines.**
 
-[![PyPI version](https://img.shields.io/pypi/v/prism-signal.svg)](https://pypi.org/project/prism-signal/)
+[![PyPI](https://img.shields.io/pypi/v/prism-signal)](https://pypi.org/project/prism-signal/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Tests](https://github.com/arpjw/prism/actions/workflows/validate_registry.yml/badge.svg)](https://github.com/arpjw/prism/actions)
 
@@ -24,10 +24,22 @@ Browse available connectors at [prism.aryasomu.com](https://prism.aryasomu.com).
 
 ---
 
-## Quickstart
+## Installation
 
 ```bash
 pip install prism-signal
+```
+
+**prism-signal is live on PyPI:** https://pypi.org/project/prism-signal/
+
+Requires Python 3.11+.
+
+---
+
+## Quickstart
+
+```bash
+pip install prism-signal  # live on PyPI
 
 prism list --registry
 
