@@ -1,0 +1,17 @@
+prism_format_version: "1.0"
+name: "Manifold Macro"
+slug: "manifold_macro"
+version: "1.0.0"
+author: "arpjw"
+source_type: "prediction_market"
+transport: "rest"
+description: "Polls macro-tagged prediction markets from Manifold Markets REST API."
+auth_required: false
+auth_fields: []
+contract_slugs:
+  - will-the-fed-cut-rates-before-2027
+tags:
+  - fed
+  - macro
+  - manifold
+homepage: "https://github.com/arpjw/prism/tree/main/connectors/manifold_macro.prism"

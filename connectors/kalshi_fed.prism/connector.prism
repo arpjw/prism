@@ -1,0 +1,20 @@
+prism_format_version: "1.0"
+name: "Kalshi Fed Markets"
+slug: "kalshi_fed"
+version: "1.0.0"
+author: "arpjw"
+source_type: "prediction_market"
+transport: "websocket"
+description: "Streams KXFED contract prices from Kalshi via WebSocket."
+auth_required: true
+auth_fields:
+  - KALSHI_API_KEY
+  - KALSHI_PRIVATE_KEY_PATH
+contract_slugs:
+  - KXFED
+tags:
+  - fed
+  - rates
+  - macro
+  - kalshi
+homepage: "https://github.com/arpjw/prism/tree/main/connectors/kalshi_fed.prism"

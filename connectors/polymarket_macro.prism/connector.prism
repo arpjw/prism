@@ -1,0 +1,19 @@
+prism_format_version: "1.0"
+name: "Polymarket Macro"
+slug: "polymarket_macro"
+version: "1.0.0"
+author: "arpjw"
+source_type: "prediction_market"
+transport: "websocket"
+description: "Streams macro-related prediction market prices from Polymarket via WebSocket."
+auth_required: false
+auth_fields: []
+contract_slugs:
+  - will-the-fed-cut-rates-in-2026
+  - will-the-fed-raise-rates-in-2026
+tags:
+  - fed
+  - rates
+  - macro
+  - polymarket
+homepage: "https://github.com/arpjw/prism/tree/main/connectors/polymarket_macro.prism"

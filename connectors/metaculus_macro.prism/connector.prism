@@ -1,0 +1,19 @@
+prism_format_version: "1.0"
+name: "Metaculus Macro"
+slug: "metaculus_macro"
+version: "1.0.0"
+author: "arpjw"
+source_type: "prediction_market"
+transport: "rest"
+description: "Polls macro forecasting questions from Metaculus REST API."
+auth_required: false
+auth_fields: []
+contract_slugs:
+  - fed-funds-rate-2026
+  - us-recession-2026
+tags:
+  - fed
+  - macro
+  - forecasting
+  - metaculus
+homepage: "https://github.com/arpjw/prism/tree/main/connectors/metaculus_macro.prism"

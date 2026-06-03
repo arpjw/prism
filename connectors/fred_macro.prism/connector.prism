@@ -1,0 +1,22 @@
+prism_format_version: "1.0"
+name: "FRED Macro"
+slug: "fred_macro"
+version: "1.0.0"
+author: "arpjw"
+source_type: "alternative_data"
+transport: "rest"
+description: "Polls Federal Reserve Economic Data (FRED) series and normalizes to [0,1] for use as signal inputs."
+auth_required: true
+auth_fields:
+  - FRED_API_KEY
+contract_slugs:
+  - FEDFUNDS
+  - DFF
+  - EFFR
+tags:
+  - fed
+  - rates
+  - macro
+  - economic-data
+  - fred
+homepage: "https://github.com/arpjw/prism/tree/main/connectors/fred_macro.prism"

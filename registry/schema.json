@@ -1,0 +1,56 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "PrismRegistry",
+  "type": "object",
+  "required": ["version", "updated_at", "connectors"],
+  "properties": {
+    "version": { "type": "string" },
+    "updated_at": { "type": "string" },
+    "connectors": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "name", "slug", "version", "author", "source_type",
+          "transport", "description", "auth_required", "contract_slugs",
+          "tags", "source_url"
+        ],
+        "properties": {
+          "name": { "type": "string" },
+          "slug": { "type": "string", "pattern": "^[a-z][a-z0-9_]*$" },
+          "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+          "author": { "type": "string" },
+          "source_type": {
+            "type": "string",
+            "enum": ["prediction_market", "alternative_data", "news", "custom"]
+          },
+          "transport": {
+            "type": "string",
+            "enum": ["websocket", "rest", "push"]
+          },
+          "description": { "type": "string" },
+          "auth_required": { "type": "boolean" },
+          "auth_fields": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "contract_slugs": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "homepage": { "type": ["string", "null"] },
+          "source_url": { "type": "string" },
+          "source_path": { "type": "string" },
+          "downloads": { "type": "integer", "minimum": 0 },
+          "verified": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

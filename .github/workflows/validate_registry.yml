@@ -1,0 +1,77 @@
+name: Validate Registry
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate-registry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install jsonschema pyyaml rich typer httpx python-dotenv
+          pip install -e .
+
+      - name: Validate registry.json against schema
+        run: |
+          python - <<'EOF'
+          import json, jsonschema, sys
+          registry = json.loads(open("registry/registry.json").read())
+          schema = json.loads(open("registry/schema.json").read())
+          jsonschema.validate(registry, schema)
+          print(f"registry.json valid — {len(registry['connectors'])} connectors")
+          EOF
+
+      - name: Validate all built-in connectors
+        run: |
+          for pkg in connectors/*.prism; do
+            echo "Validating $pkg..."
+            python -m prism validate "$pkg" || exit 1
+          done
+
+  validate-new-connectors:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml rich typer httpx python-dotenv
+          pip install -e .
+
+      - name: Find changed connector packages
+        id: changed
+        run: |
+          changed=$(git diff --name-only origin/${{ github.base_ref }}...HEAD \
+            | grep '^connectors/[^/]*\.prism/' \
+            | sed 's|/.*||' | sort -u)
+          echo "Changed connector dirs: $changed"
+          echo "dirs=$changed" >> $GITHUB_OUTPUT
+
+      - name: Validate changed connectors
+        run: |
+          for pkg in ${{ steps.changed.outputs.dirs }}; do
+            echo "Validating $pkg..."
+            python -m prism validate "$pkg"
+            if [ $? -ne 0 ]; then
+              echo "::error::Connector $pkg failed validation"
+              exit 1
+            fi
+          done
