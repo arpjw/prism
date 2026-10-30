@@ -35,7 +35,7 @@ jobs:
         run: |
           for pkg in connectors/*.prism; do
             echo "Validating $pkg..."
-            python -m prism validate "$pkg" || exit 1
+            prism validate "$pkg" || exit 1
           done
 
   validate-new-connectors:
@@ -56,22 +56,16 @@ jobs:
           pip install pyyaml rich typer httpx python-dotenv
           pip install -e .
 
-      - name: Find changed connector packages
-        id: changed
-        run: |
-          changed=$(git diff --name-only origin/${{ github.base_ref }}...HEAD \
-            | grep '^connectors/[^/]*\.prism/' \
-            | sed 's|/.*||' | sort -u)
-          echo "Changed connector dirs: $changed"
-          echo "dirs=$changed" >> $GITHUB_OUTPUT
-
       - name: Validate changed connectors
         run: |
-          for pkg in ${{ steps.changed.outputs.dirs }}; do
+          changed=$(git diff --name-only "origin/${{ github.base_ref }}...HEAD" \
+            | awk -F/ '$1 == "connectors" && $2 ~ /\.prism$/ {print $1 "/" $2}' \
+            | sort -u)
+          if [ -z "$changed" ]; then
+            echo "No connector packages changed"
+            exit 0
+          fi
+          while IFS= read -r pkg; do
             echo "Validating $pkg..."
-            python -m prism validate "$pkg"
-            if [ $? -ne 0 ]; then
-              echo "::error::Connector $pkg failed validation"
-              exit 1
-            fi
-          done
+            prism validate "$pkg"
+          done <<< "$changed"
