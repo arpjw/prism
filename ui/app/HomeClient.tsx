@@ -3,7 +3,6 @@ import { useState, useMemo } from "react";
 import type { Connector } from "../lib/registry";
 import ConnectorCard from "../components/ConnectorCard";
 import FilterBar from "../components/FilterBar";
-import SkeletonCard from "../components/SkeletonCard";
 import TerminalBlock from "../components/TerminalBlock";
 import CopyButton from "../components/CopyButton";
 
