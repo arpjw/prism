@@ -1,23 +1,19 @@
 import { fetchRegistry, getReadmeUrl } from "../../../lib/registry";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import MarkdownRenderer from "../../../components/MarkdownRenderer";
 import CopyButton from "../../../components/CopyButton";
 
 export const revalidate = 300;
 
 interface Props {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }
 
-const TRANSPORT_LABELS: Record<string, string> = {
-  websocket: "WebSocket",
-  rest: "REST",
-  push: "Push",
-};
-
 export default async function ConnectorPage({ params }: Props) {
+  const { slug } = await params;
   const registry = await fetchRegistry();
-  const connector = registry.connectors.find(c => c.slug === params.slug);
+  const connector = registry.connectors.find(c => c.slug === slug);
 
   if (!connector) notFound();
 
@@ -36,7 +32,7 @@ export default async function ConnectorPage({ params }: Props) {
         color: "var(--text-tertiary)",
         marginBottom: 32,
       }}>
-        <a href="/" style={{ color: "var(--text-tertiary)" }}>PRISM</a>
+        <Link href="/" style={{ color: "var(--text-tertiary)" }}>PRISM</Link>
         {" / "}
         <span style={{ color: "var(--text-secondary)" }}>{connector.slug}</span>
       </div>
@@ -166,7 +162,7 @@ export default async function ConnectorPage({ params }: Props) {
       )}
 
       {/* Back link */}
-      <a href="/" style={{
+      <Link href="/" style={{
         fontFamily: "'DM Mono', monospace",
         fontSize: 12,
         color: "var(--text-secondary)",
@@ -176,7 +172,7 @@ export default async function ConnectorPage({ params }: Props) {
         marginTop: 16,
       }}>
         ← Back to registry
-      </a>
+      </Link>
     </div>
   );
 }

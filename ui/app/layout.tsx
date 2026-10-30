@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -40,7 +41,7 @@ function Header() {
       alignItems: "center",
       justifyContent: "space-between",
     }}>
-      <a href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
+      <Link href="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none" }}>
         <PrismIcon />
         <span style={{
           fontFamily: "'DM Mono', monospace",
@@ -51,7 +52,7 @@ function Header() {
         }}>
           PRISM
         </span>
-      </a>
+      </Link>
       <nav style={{ display: "flex", gap: 28 }}>
         {[
           { label: "GitHub", href: "https://github.com/arpjw/prism" },
